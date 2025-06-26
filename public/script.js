@@ -140,4 +140,63 @@ querySnapshot.forEach((doc) => {
       });
     });
   }
-});
+});// ================== MASA EKLEME PANELİ ==================
+const addTableBtn = document.getElementById('add-table-btn');
+const tableNameInput = document.getElementById('table-name-input');
+const addStatus = document.getElementById('add-status');
+
+if (addTableBtn && tableNameInput && addStatus) {
+    addTableBtn.addEventListener('click', async () => {
+        const tableName = tableNameInput.value.trim();
+
+        if (!tableName) {
+            addStatus.textContent = "Lütfen masa adı girin.";
+            addStatus.style.color = "red";
+            return;
+        }
+
+        try {
+            await addDoc(collection(db, "tables"), {
+                name: tableName,
+                isPaid: false,
+                qrUrl: `https://qr-demo-project.vercel.app/public/table.html?id=${tableName}`
+            });
+
+            addStatus.textContent = "Masa başarıyla eklendi.";
+            addStatus.style.color = "green";
+            tableNameInput.value = '';
+        } catch (error) {
+            addStatus.textContent = `Hata: ${error.message}`;
+            addStatus.style.color = "red";
+        }
+    });// ================== MASA EKLEME PANELİ ==================
+const addTableBtn = document.getElementById('add-table-btn');
+const tableNameInput = document.getElementById('table-name-input');
+const addStatus = document.getElementById('add-status');
+
+if (addTableBtn && tableNameInput && addStatus) {
+    addTableBtn.addEventListener('click', async () => {
+        const tableName = tableNameInput.value.trim();
+
+        if (!tableName) {
+            addStatus.textContent = "Lütfen masa adı girin.";
+            addStatus.style.color = "red";
+            return;
+        }
+
+        try {
+            await addDoc(collection(db, "tables"), {
+                name: tableName,
+                isPaid: false,
+                qrUrl: `https://qr-demo-project.vercel.app/public/table.html?id=${tableName}`
+            });
+
+            addStatus.textContent = "Masa başarıyla eklendi.";
+            addStatus.style.color = "green";
+            tableNameInput.value = '';
+        } catch (error) {
+            addStatus.textContent = `Hata: ${error.message}`;
+            addStatus.style.color = "red";
+        }
+    });
+}
