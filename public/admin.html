@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Paneli</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>İşletme Yönetim Paneli</h1>
+        <p>Aşağıdaki linkler, masalarınıza özel oluşturulmuş QR kod hedefleridir. Bu linkleri QR koda dönüştürüp masalarınıza yapıştırabilirsiniz.</p>
+        <table id="tables-list">
+            <thead>
+                <tr>
+                    <th>Masa Adı</th>
+                    <th>Durum</th>
+                    <th>QR Kod Linki</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const tableBody = document.querySelector('#tables-list tbody');
+            fetch('/api/admin/tables')
+                .then(res => res.json())
+                .then(tables => {
+                    tables.forEach(table => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${table.name}</td>
+                            <td>${table.isPaid ? '<span style="color:green;">Ödendi</span>' : '<span style="color:red;">Ödenmedi</span>'}</td>
+                            <td><a href="${table.qrUrl}" target="_blank">${table.qrUrl}</a></td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                });
+        });
+    </script>
+</body>
+</html>
