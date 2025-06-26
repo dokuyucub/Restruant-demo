@@ -1,95 +1,40 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Paneli</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İşletme Yönetim Paneli</title>
+    <link rel="stylesheet" href="admin.css">
 </head>
 <body>
-  <div class="container">
-    <h1>İşletme Yönetim Paneli</h1>
-    <p>Aşağıdaki linkler, masalarınıza özel oluşturulmuş QR kod hedefleridir. Bu linkleri QR koda dönüştürüp masalarınıza yapıştırabilirsiniz.</p>
-    <table id="tables-list">
-      <thead>
-        <tr>
-          <th>Masa Adı</th>
-          <th>Durum</th>
-          <th>QR Kod Linki</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </div>
+    <div class="admin-container">
+        <div class="panel">
+            <h1>İşletme Yönetim Paneli</h1>
+            <p class="description">
+                Aşağıdaki linkler, masalarınıza özel oluşturulmuş QR kod hedefleridir.
+                Bu linkleri QR koda dönüştürüp masalarınıza yapıştırabilirsiniz.
+            </p>
+        </div>
 
-  <h2>Masa Ekle</h2>
-  <input type="text" id="table-name-input" placeholder="Masa Adı">
-  <button id="add-table-btn">Masa Ekle</button>
-  <p id="add-status"></p>
+        <table id="table-list">
+            <thead>
+                <tr>
+                    <th>Masa Adı</th>
+                    <th>Durum</th>
+                    <th>QR Kod Linki</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- JavaScript ile doldurulacak -->
+            </tbody>
+        </table>
 
-  <script type="module">
-    // Firebase SDK
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getFirestore, collection, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        <div class="add-table">
+            <input type="text" id="table-name-input" placeholder="Masa Adı">
+            <button onclick="addTable()">Masa Ekle</button>
+        </div>
+    </div>
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyD2kCpWN6wJ-qaf-6U5WdqiK5cBSSvuFbM",
-      authDomain: "qrdemo-4de36.firebaseapp.com",
-      projectId: "qrdemo-4de36",
-      storageBucket: "qrdemo-4de36.appspot.com",
-      messagingSenderId: "305123706543",
-      appId: "1:305123706543:web:eb3517d73ad8f3b478f65a"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    document.addEventListener('DOMContentLoaded', async () => {
-      const tableBody = document.querySelector('#tables-list tbody');
-      const addTableBtn = document.getElementById('add-table-btn');
-      const tableNameInput = document.getElementById('table-name-input');
-      const addStatus = document.getElementById('add-status');
-
-      // Firebase'den mevcut masaları çek
-      const snapshot = await getDocs(collection(db, 'tables'));
-      snapshot.forEach(doc => {
-        const data = doc.data();
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${data.name}</td>
-          <td>${data.isPaid ? '<span style="color:green;">Ödendi</span>' : '<span style="color:red;">Ödenmedi</span>'}</td>
-          <td><a href="${data.qrUrl}" target="_blank">${data.qrUrl}</a></td>
-        `;
-        tableBody.appendChild(row);
-      });
-
-      // Masa ekleme butonu
-      addTableBtn.addEventListener('click', async () => {
-        const tableName = tableNameInput.value.trim();
-        if (!tableName) {
-          addStatus.textContent = "Lütfen masa adı girin.";
-          addStatus.style.color = "red";
-          return;
-        }
-
-        try {
-          await addDoc(collection(db, "tables"), {
-            name: tableName,
-            isPaid: false,
-            qrUrl: `https://resturant-demo.vercel.app/public/table.html?id=${tableName}`
-          });
-
-          addStatus.textContent = "Masa başarıyla eklendi!";
-          addStatus.style.color = "green";
-          tableNameInput.value = "";
-          location.reload(); // sayfayı yenile ki tablo güncellensin
-        } catch (error) {
-          console.error("Hata:", error);
-          addStatus.textContent = "Hata oluştu.";
-          addStatus.style.color = "red";
-        }
-      });
-    });
-  </script>
+    <script src="script.js"></script>
 </body>
 </html>
