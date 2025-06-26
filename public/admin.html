@@ -1,14 +1,69 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Paneli</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
   <style>
-    #add-table-btn, #table-name-input {
-      display: block;
-      margin-top: 20px;
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+    }
+
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f0f0f0;
+    }
+
+    h1, h2 {
+      color: #333;
+    }
+
+    #table-name-input {
+      padding: 8px;
+      width: 60%;
+      margin-right: 10px;
+    }
+
+    #add-table-btn {
+      padding: 8px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #add-table-btn:hover {
+      background-color: #0056b3;
+    }
+
+    #add-status {
+      margin-top: 10px;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -27,31 +82,14 @@
       </thead>
       <tbody></tbody>
     </table>
+
+    <h2>Masa Ekle</h2>
+    <input type="text" id="table-name-input" placeholder="Masa Adı" />
+    <button id="add-table-btn">Masa Ekle</button>
+    <p id="add-status"></p>
   </div>
 
-  <script>
-    window.addEventListener('DOMContentLoaded', () => {
-      const tableBody = document.querySelector('#tables-list tbody');
-      fetch('/api/admin/tables')
-        .then(res => res.json())
-        .then(tables => {
-          tables.forEach(table => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-              <td>${table.name}</td>
-              <td>${table.isPaid ? '<span style="color:green;">Ödendi</span>' : '<span style="color:red;">Ödenmedi</span>'}</td>
-              <td><a href="${table.qrUrl}" target="_blank">${table.qrUrl}</a></td>
-            `;
-            tableBody.appendChild(row);
-          });
-        });
-    });
-  </script>
-
-  <!-- Masa ekleme alanı -->
-  <h2>Masa Ekle</h2>
-  <input type="text" id="table-name-input" placeholder="Masa Adı">
-  <button id="add-table-btn">Masa Ekle</button>
-  <p id="add-status"></p>
+  <!-- Script dosyanı modül olarak çağırıyoruz -->
+  <script type="module" src="script.js"></script>
 </body>
 </html>
