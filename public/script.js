@@ -28,7 +28,22 @@ window.addEventListener('DOMContentLoaded', () => {
         addStatus.textContent = "Lütfen masa adı girin.";
         addStatus.style.color = "red";
         return;
-      }
+      }// Tablodaki verileri Firebase'den çekip göster
+const tableBody = document.querySelector("#table-list tbody");
+tableBody.innerHTML = "";
+
+const querySnapshot = await getDocs(collection(db, "tables"));
+querySnapshot.forEach((doc) => {
+  const data = doc.data();
+
+  const row = document.createElement("tr");
+  row.innerHTML = `
+    <td>${data.name}</td>
+    <td class="status">${data.isPaid ? "Ödendi" : "Ödenmedi"}</td>
+    <td><a href="${data.qrUrl}" target="_blank">${data.qrUrl}</a></td>
+  `;
+  tableBody.appendChild(row);
+});
 
       try {
         await addDoc(collection(db, "tables"), {
