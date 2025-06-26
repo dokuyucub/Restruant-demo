@@ -1,3 +1,18 @@
+// Firebase SDK ekleniyor
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD2kCpWN6wJ-qaf-6U5WdqiK5cBSSvuFbM",
+  authDomain: "qrdemo-4de36.firebaseapp.com",
+  projectId: "qrdemo-4de36",
+  storageBucket: "qrdemo-4de36.appspot.com",
+  messagingSenderId: "305123706543",
+  appId: "1:305123706543:web:eb3517d73ad8f3b478f65a"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 window.addEventListener('DOMContentLoaded', () => {
     const tableNameEl = document.getElementById('table-name');
     const billDetailsEl = document.getElementById('bill-details');
@@ -8,7 +23,35 @@ window.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
     const tableId = params.get('id');
     let tableData = null;
+const addTableBtn = document.getElementById('add-table-btn');
+const tableNameInput = document.getElementById('table-name-input');
+const addStatus = document.getElementById('add-status');
 
+addTableBtn.addEventListener('click', async () => {
+  const tableName = tableNameInput.value.trim();
+
+  if (!tableName) {
+    addStatus.textContent = "Lütfen masa adı girin.";
+    addStatus.style.color = "red";
+    return;
+  }
+
+  try {
+    await addDoc(collection(db, "tables"), {
+      name: tableName,
+      isPaid: false,
+      qrUrl: `https://resturant-demo.vercel.app/public/table.html?id=${tableName}`
+    });
+
+    addStatus.textContent = "Masa başarıyla eklendi!";
+    addStatus.style.color = "green";
+    tableNameInput.value = "";
+  } catch (error) {
+    console.error("Hata:", error);
+    addStatus.textContent = "Hata oluştu.";
+    addStatus.style.color = "red";
+  }
+});
     if (!tableId) {
         tableNameEl.textContent = 'Hata: Masa ID bulunamadı!';
         return;
