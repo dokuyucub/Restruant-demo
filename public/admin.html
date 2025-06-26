@@ -1,40 +1,37 @@
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>İşletme Yönetim Paneli</title>
-    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="admin-container">
-        <div class="panel">
-            <h1>İşletme Yönetim Paneli</h1>
-            <p class="description">
-                Aşağıdaki linkler, masalarınıza özel oluşturulmuş QR kod hedefleridir.
-                Bu linkleri QR koda dönüştürüp masalarınıza yapıştırabilirsiniz.
-            </p>
-        </div>
+    <div class="container">
+        <h1>İşletme Yönetim Paneli</h1>
+        <p>Aşağıdaki linkler, masalarınıza özel oluşturulmuş QR kod hedefleridir. Bu linkleri QR koda dönüştürüp masalarınıza yapıştırabilirsiniz.</p>
 
-        <table id="table-list">
+        <table id="tables-list">
             <thead>
                 <tr>
                     <th>Masa Adı</th>
                     <th>Durum</th>
                     <th>QR Kod Linki</th>
+                    <th>Sil</th>
                 </tr>
             </thead>
-            <tbody>
-                <!-- JavaScript ile doldurulacak -->
-            </tbody>
+            <tbody></tbody>
         </table>
 
         <div class="add-table">
             <input type="text" id="table-name-input" placeholder="Masa Adı">
-            <button onclick="addTable()">Masa Ekle</button>
+            <button id="add-table-btn">Masa Ekle</button>
         </div>
+
+        <p id="add-status"></p>
     </div>
 
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>

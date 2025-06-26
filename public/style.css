@@ -1,78 +1,70 @@
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: Arial, sans-serif;
     background-color: #f4f4f9;
-    color: #333;
+    margin: 0;
+    padding: 40px;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    padding-top: 40px;
-    min-height: 100vh;
-    margin: 0;
 }
+
 .container {
     background-color: #fff;
     padding: 25px;
     border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    max-width: 800px;
     width: 100%;
-    max-width: 400px;
 }
+
 h1 {
     text-align: center;
-    color: #555;
-    margin-bottom: 20px;
+    color: #333;
 }
-#bill-details {
-    margin-bottom: 20px;
-}
-.bill-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid #eee;
-}
-.total-section {
-    display: flex;
-    justify-content: space-between;
-    font-weight: bold;
-    font-size: 1.2em;
-    padding: 20px 0;
-    color: #000;
-}
-button {
-    width: 100%;
-    padding: 15px;
-    font-size: 1em;
-    font-weight: bold;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-button:hover {
-    background-color: #0056b3;
-}
-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
-#status-message {
+
+p {
     text-align: center;
-    margin-top: 15px;
-    font-weight: bold;
 }
-#tables-list {
+
+table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
-#tables-list th, #tables-list td {
+
+th, td {
     border: 1px solid #ddd;
-    padding: 8px;
+    padding: 10px;
     text-align: left;
 }
-#tables-list th {
-    background-color: #f2f2f2;
+
+th {
+    background-color: #f0f0f0;
+}
+
+.add-table {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.add-table input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.add-table button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#add-status {
+    margin-top: 15px;
+    text-align: center;
+    font-weight: bold;
 }
